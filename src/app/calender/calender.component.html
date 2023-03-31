@@ -1,1 +1,35 @@
-<ActionBar title="Calander"> </ActionBar>
+<StackLayout>
+  <!-- Top View containing filters -->
+  <FlexboxLayout style="padding: 20">
+    <FlexboxLayout class="dropDownWrapper" width="30%">
+      <DropDown
+        #dd
+        itemsTextAlignment="center"
+        [items]="propertySelectItems"
+        [(ngModel)]="selectedPropertyIndex"
+        (selectedIndexChanged)="onchange($event)"
+        (opened)="onopen()"
+        (closed)="onclose()"
+        class="propertiesSelectMenu"
+        width="100%"
+        backroundColor="white"
+      >
+      </DropDown>
+    </FlexboxLayout>
+    <FlexboxLayout class="dropDownWrapper ml-3" width="30%">
+      <DropDown
+        #dd
+        itemsTextAlignment="center"
+        [items]="AgentSelectItems"
+        [(ngModel)]="selectedAgentIndex"
+        (selectedIndexChanged)="onchange($event)"
+        (opened)="onopen()"
+        (closed)="onclose()"
+        class="agentsSelectMenu"
+        width="100%"
+        backroundColor="white"
+      ></DropDown>
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <!-- Main View -->
+</StackLayout>
