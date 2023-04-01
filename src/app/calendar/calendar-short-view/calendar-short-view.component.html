@@ -24,16 +24,24 @@
     </GridLayout>
 
     <GridLayout rows="*,*,*,*,*" columns="*,*,*,*,*,*,*">
-      <ng-container *ngFor="let week of weeks; let i = index">
+      <ng-container *ngFor="let week of month; let i = index">
         <ng-container *ngFor="let date of week; let j = index">
           <StackLayout
             [row]="i"
             [col]="j"
-            [height]="date ? '100%' : 'auto'"
-            [verticalAlignment]="date ? 'middle' : 'top'"
-            [horizontalAlignment]="date ? 'center' : 'left'"
+            height="100%"
+            width="100%"
+            verticalAlignment="middle"
+            horizontalAlignment="center"
+            [class.calendar-active-week-card]="date.isBgGray"
+            [class.border-radius-right]="j == week.length - 1"
+            [class.border-radius-left]="j == 0"
           >
-            <Label [text]="date" class="text-center"></Label>
+            <Label
+              [text]="date.day"
+              [ngClass]="date.isTextGrayed ? 'gray-text' : ''"
+              class="text-center"
+            ></Label>
           </StackLayout>
         </ng-container>
       </ng-container>

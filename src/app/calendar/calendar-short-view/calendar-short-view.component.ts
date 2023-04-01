@@ -1,44 +1,60 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Subject, takeUntil } from "rxjs";
+import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 
 @Component({
   selector: "ns-calendar-short-view",
   templateUrl: "./calendar-short-view.component.html",
   styleUrls: ["./calendar-short-view.component.scss"],
 })
-export class CalendarShortViewComponent implements OnInit {
+export class CalendarShortViewComponent implements OnInit, OnDestroy {
   days: Array<string> = ["S", "M", "T", "W", "T", "F", "S"];
-  weeks: Array<Array<number>> = [];
+  month: Array<
+    Array<{ day: number; isTextGrayed: boolean; isBgGray: boolean }>
+  > = [];
+  activeWeek: Date[];
 
-  constructor() {}
+  private onDestroy$: Subject<void> = new Subject<void>();
 
-  ngOnInit(): void {
-    this.initWeeksArray();
+  constructor(private store: Store<{ calendarState: CalendarState }>) {
+    this.store
+      .select("calendarState")
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((state: CalendarState) => {
+        this.activeWeek = state.activeWeek;
+        this.month = state.activeMonth.map((weeks: Date[]) => {
+          return weeks.map((day: Date) => {
+            return {
+              day: day.getDate(),
+              isTextGrayed: day.getMonth() + 1 !== state.activeMonthNumber,
+              isBgGray: this.isDayInActiveWeek(day, this.activeWeek),
+            };
+          });
+        });
+        console.log("###", this.month);
+      });
+  }
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
-  initWeeksArray(): void {
-    // Get current month and year
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
+  isDayInActiveWeek(day: Date, week: Date[]): boolean {
+    let res: boolean = false;
+    week.forEach((weekDay: Date) => {
+      if (
+        weekDay.getDate() === day.getDate() &&
+        weekDay.getMonth() === day.getMonth()
+      ) {
+        res = true;
+      }
+    });
+    return res;
+  }
 
-    // Get the number of days in the month
-    const numDays = new Date(year, month + 1, 0).getDate();
-
-    // Get the first day of the month
-    const firstDay = new Date(year, month, 1).getDay();
-
-    // Generate an array of all the dates in the month
-    const dates = Array.from({ length: numDays }, (_, i) => i + 1);
-
-    // Add empty cells to the beginning of the array to align the first date with the correct weekday
-    for (let i = 0; i < firstDay; i++) {
-      dates.unshift(null);
-    }
-
-    // Split the array of dates into chunks of 7 (for each week)
-    this.weeks = Array.from({ length: 5 }, (_, i) =>
-      dates.slice(i * 7, (i + 1) * 7)
-    );
+  ngOnInit(): void {
+    // this.store.dispatch(setActiveDate({ date: new Date("10/04/2000") }));
   }
 
   onLeftTap(): void {}
