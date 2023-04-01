@@ -41,9 +41,7 @@ export class CalendarShortViewComponent implements OnInit {
     );
   }
 
-  onLeftTap(): void {
-    console.log("### left");
-  }
+  onLeftTap(): void {}
 
   onRightTap(): void {}
 }

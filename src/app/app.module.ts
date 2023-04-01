@@ -8,9 +8,15 @@ import { CalendarShortViewComponent } from "./calendar/calendar-short-view/calen
 import { CalendarNextViewComponent } from "./calendar/calendar-next-view/calendar-next-view.component";
 import { CalendarExpandedViewComponent } from "./calendar/calendar-expanded-view/calendar-expanded-view.component";
 import { ViewingCardComponent } from "./calendar/calendar-expanded-view/viewing-card/viewing-card.component";
+import { StoreModule } from "@ngrx/store";
+import { calendarReducer } from "./store/reducers/calendar.reducer";
 @NgModule({
   bootstrap: [AppComponent],
-  imports: [NativeScriptModule, DropDownModule],
+  imports: [
+    NativeScriptModule,
+    DropDownModule,
+    StoreModule.forRoot({ calendarState: calendarReducer }),
+  ],
   declarations: [
     AppComponent,
     CalendarComponent,
@@ -18,7 +24,7 @@ import { ViewingCardComponent } from "./calendar/calendar-expanded-view/viewing-
     CalendarShortViewComponent,
     CalendarNextViewComponent,
     CalendarExpandedViewComponent,
-    ViewingCardComponent
+    ViewingCardComponent,
   ],
   providers: [],
   schemas: [NO_ERRORS_SCHEMA],

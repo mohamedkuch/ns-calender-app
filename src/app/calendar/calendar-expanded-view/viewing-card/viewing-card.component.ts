@@ -10,9 +10,7 @@ export class ViewingCardComponent implements OnInit, AfterViewInit {
   @Input() isInPast: boolean;
 
   constructor() {}
-  ngAfterViewInit(): void {
-    console.log("####", this.isInPast);
-  }
+  ngAfterViewInit(): void {}
 
   ngOnInit(): void {}
 }

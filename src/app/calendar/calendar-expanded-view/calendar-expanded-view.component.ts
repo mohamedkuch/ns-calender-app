@@ -87,7 +87,6 @@ export class CalendarExpandedViewComponent implements OnInit {
   }
 
   onLeftTap(): void {
-    console.log("### left");
   }
 
   onRightTap(): void {}
