@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.nscalenderapp',
+  id: 'org.nativescript.nscalendarapp',
   appPath: 'src',
   appResourcesPath: 'App_Resources',
   android: {

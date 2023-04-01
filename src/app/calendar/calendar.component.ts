@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { SelectedIndexChangedEventData } from "nativescript-drop-down";
-import { DropDown } from "nativescript-drop-down";
+
 @Component({
-  selector: "ns-calender",
-  templateUrl: "./calender.component.html",
-  styleUrls: ["./calender.component.scss"],
+  selector: "ns-calendar",
+  templateUrl: "./calendar.component.html",
+  styleUrls: ["./calendar.component.scss"],
 })
-export class CalenderComponent implements OnInit {
+export class CalendarComponent implements OnInit {
   // Properties select menu items
   public selectedPropertyIndex = 0;
   public propertySelectItems: Array<string> = [

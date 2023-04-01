@@ -1,5 +1,5 @@
 {
-  "name": "ns-calender-app",
+  "name": "ns-calendar-app",
   "main": "./src/main.ts",
   "version": "1.0.0",
   "private": true,
