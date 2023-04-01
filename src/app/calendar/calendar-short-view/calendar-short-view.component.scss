@@ -13,7 +13,11 @@
     background-color: #e7e7e7;
   }
   &-active-day-card {
-    background-color: #e7e7e7;
+    background-color: #3486ef;
+    border-radius: 4;
+    .calendar-day-text {
+      color: white;
+    }
   }
 }
 

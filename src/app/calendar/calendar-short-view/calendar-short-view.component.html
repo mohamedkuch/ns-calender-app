@@ -1,6 +1,10 @@
 <StackLayout class="calendar">
   <FlexboxLayout flexDirection="row" class="calendar-top-wrapper p-2">
-    <Label flexGrow="1" class="calendar-date" text="October 2017"></Label>
+    <Label
+      flexGrow="1"
+      class="calendar-date"
+      text="{{ activeDate | date : 'MMMM yyyy' }}"
+    ></Label>
     <FlexboxLayout>
       <GridLayout (tap)="onLeftTap()" class="arrow-left mr-2"> </GridLayout>
       <GridLayout (tap)="onRightTap()" class="arrow-right"> </GridLayout>
@@ -33,14 +37,18 @@
             width="100%"
             verticalAlignment="middle"
             horizontalAlignment="center"
-            [class.calendar-active-week-card]="date.isBgGray"
-            [class.border-radius-right]="j == week.length - 1"
-            [class.border-radius-left]="j == 0"
+            [class.calendar-active-week-card]="date.isActiveWeek"
+            [class.calendar-active-day-card]="date.isActiveDay"
+            [class.border-radius-right]="
+              j == week.length - 1 && !date.isActiveDay
+            "
+            [class.border-radius-left]="j == 0 && !date.isActiveDay"
+            (tap)="onDateChanged(date.day)"
           >
             <Label
-              [text]="date.day"
+              [text]="date.dayNumber"
               [ngClass]="date.isTextGrayed ? 'gray-text' : ''"
-              class="text-center"
+              class="text-center calendar-day-text"
             ></Label>
           </StackLayout>
         </ng-container>

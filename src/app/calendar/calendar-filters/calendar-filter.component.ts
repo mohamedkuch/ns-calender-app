@@ -23,17 +23,9 @@ export class CalendarFilterComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public onchange(args: SelectedIndexChangedEventData): void {
-    console.log(
-      `Drop Down selected index changed from ${args.oldIndex} to ${args.newIndex}`
-    );
-  }
+  public onchange(args: SelectedIndexChangedEventData): void {}
 
-  public onopen(): void {
-    console.log("Drop Down opened.");
-  }
+  public onopen(): void {}
 
-  public onclose(): void {
-    console.log("Drop Down closed.");
-  }
+  public onclose(): void {}
 }

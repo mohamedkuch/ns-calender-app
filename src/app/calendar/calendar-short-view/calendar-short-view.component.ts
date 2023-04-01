@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subject, takeUntil } from "rxjs";
+import { setActiveDate } from "~/app/store/actions/calendar.actions";
 import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 
 @Component({
@@ -11,9 +12,15 @@ import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 export class CalendarShortViewComponent implements OnInit, OnDestroy {
   days: Array<string> = ["S", "M", "T", "W", "T", "F", "S"];
   month: Array<
-    Array<{ day: number; isTextGrayed: boolean; isBgGray: boolean }>
+    Array<{
+      day: Date;
+      dayNumber: number;
+      isTextGrayed: boolean;
+      isActiveWeek: boolean;
+      isActiveDay: boolean;
+    }>
   > = [];
-  activeWeek: Date[];
+  activeDate: Date = new Date();
 
   private onDestroy$: Subject<void> = new Subject<void>();
 
@@ -22,17 +29,18 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
       .select("calendarState")
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((state: CalendarState) => {
-        this.activeWeek = state.activeWeek;
         this.month = state.activeMonth.map((weeks: Date[]) => {
+          this.activeDate = state.activeDate;
           return weeks.map((day: Date) => {
             return {
-              day: day.getDate(),
+              day: day,
+              dayNumber: day.getDate(),
               isTextGrayed: day.getMonth() + 1 !== state.activeMonthNumber,
-              isBgGray: this.isDayInActiveWeek(day, this.activeWeek),
+              isActiveWeek: this.isDayInActiveWeek(day, state.activeWeek),
+              isActiveDay: this.isDatesEqual(day, state.activeDate),
             };
           });
         });
-        console.log("###", this.month);
       });
   }
   ngOnDestroy(): void {
@@ -40,22 +48,30 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
     this.onDestroy$.complete();
   }
 
+  isDatesEqual(firstDate: Date, secondDate: Date): boolean {
+    let res: boolean = false;
+    if (
+      firstDate.getDate() === secondDate.getDate() &&
+      firstDate.getMonth() === secondDate.getMonth()
+    ) {
+      res = true;
+    }
+    return res;
+  }
+
+  onDateChanged(newDay: Date): void {
+    this.store.dispatch(setActiveDate({ date: newDay }));
+  }
+
   isDayInActiveWeek(day: Date, week: Date[]): boolean {
     let res: boolean = false;
     week.forEach((weekDay: Date) => {
-      if (
-        weekDay.getDate() === day.getDate() &&
-        weekDay.getMonth() === day.getMonth()
-      ) {
-        res = true;
-      }
+      if (this.isDatesEqual(weekDay, day)) res = true;
     });
     return res;
   }
 
-  ngOnInit(): void {
-    // this.store.dispatch(setActiveDate({ date: new Date("10/04/2000") }));
-  }
+  ngOnInit(): void {}
 
   onLeftTap(): void {}
 
