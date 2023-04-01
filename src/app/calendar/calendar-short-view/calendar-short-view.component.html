@@ -1,7 +1,10 @@
 <StackLayout class="calendar">
   <FlexboxLayout flexDirection="row" class="calendar-top-wrapper p-2">
     <Label flexGrow="1" class="calendar-date" text="October 2017"></Label>
-    <Label text="Arrows"></Label>
+    <FlexboxLayout>
+      <GridLayout (tap)="onLeftTap()" class="arrow-left mr-2"> </GridLayout>
+      <GridLayout (tap)="onRightTap()" class="arrow-right"> </GridLayout>
+    </FlexboxLayout>
   </FlexboxLayout>
 
   <StackLayout flexGrow="1" class="p-2">

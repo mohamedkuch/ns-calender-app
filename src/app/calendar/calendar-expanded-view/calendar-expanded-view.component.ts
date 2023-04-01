@@ -9,4 +9,9 @@ export class CalendarExpandedViewComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+  onLeftTap(): void {
+    console.log("### left");
+  }
+
+  onRightTap(): void {}
 }

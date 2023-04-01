@@ -1,8 +1,25 @@
 @import "@nativescript/theme/css/core.css";
 @import "@nativescript/theme/css/default.css";
 
+/* Global styles */
 .mainLayout {
   background-color: #f2f2f2;
+}
+
+.arrow-left,
+.arrow-right {
+  height: 10;
+  width: 10;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.arrow-left {
+  background-image: url("~/app/assets/arrowLeft.png");
+}
+.arrow-right {
+  background-image: url("~/app/assets/arrowRight.png");
 }
 
 /* helpers classes */

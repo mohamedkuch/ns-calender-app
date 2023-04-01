@@ -35,7 +35,11 @@ export class CalendarShortViewComponent implements OnInit {
     this.weeks = Array.from({ length: 5 }, (_, i) =>
       dates.slice(i * 7, (i + 1) * 7)
     );
-
-    console.log("###", this.weeks);
   }
+
+  onLeftTap(): void {
+    console.log("### left");
+  }
+
+  onRightTap(): void {}
 }
