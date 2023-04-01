@@ -1,13 +1,18 @@
 <StackLayout class="calendar">
-  <FlexboxLayout flexDirection="row" class="calendar-top-wrapper p-2">
+  <FlexboxLayout flexDirection="row" class="calendar-top-wrapper">
     <Label
       flexGrow="1"
-      class="calendar-date"
-      text="{{ activeDate | date : 'MMMM yyyy' }}"
+      class="calendar-date ml-2"
+      text="{{ activeMonth | date : 'MMMM yyyy' }}"
     ></Label>
     <FlexboxLayout>
-      <GridLayout (tap)="onLeftTap()" class="arrow-left mr-2"> </GridLayout>
-      <GridLayout (tap)="onRightTap()" class="arrow-right"> </GridLayout>
+      <GridLayout (tap)="onPrevMonth()" height="60" width="40">
+        <StackLayout class="arrow-left"> </StackLayout>
+      </GridLayout>
+
+      <GridLayout (tap)="onNextMonth()" height="60" width="40">
+        <StackLayout class="arrow-right"> </StackLayout>
+      </GridLayout>
     </FlexboxLayout>
   </FlexboxLayout>
 
@@ -27,7 +32,7 @@
       </ng-container>
     </GridLayout>
 
-    <GridLayout rows="*,*,*,*,*" columns="*,*,*,*,*,*,*">
+    <GridLayout [rows]="generateGridRows()" [columns]="generateGridColumns()">
       <ng-container *ngFor="let week of month; let i = index">
         <ng-container *ngFor="let date of week; let j = index">
           <StackLayout

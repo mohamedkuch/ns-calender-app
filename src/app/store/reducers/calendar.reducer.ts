@@ -9,7 +9,7 @@ export interface CalendarState {
   // active month to be displayed in the short view calendar
   activeMonth: Array<Array<Date>>;
   activeMonthNumber: number;
-  displayedMonth: Date[];
+  activeMonthDate: Date;
   appointments: Appointment[];
 }
 
@@ -18,7 +18,7 @@ export const initialState: CalendarState = {
   activeWeek: getActiveWeek(new Date()),
   activeMonth: getActiveMonth(new Date()),
   activeMonthNumber: getActiveMonthNumber(new Date()),
-  displayedMonth: [],
+  activeMonthDate: getFirstMonthDay(new Date()),
   appointments: [],
 };
 
@@ -36,6 +36,13 @@ export const calendarReducer = createReducer(
     activeWeek: getActiveWeek(date),
     activeMonth: getActiveMonth(date),
     activeMonthNumber: getActiveMonthNumber(date),
+    activeMonthDate: getFirstMonthDay(date),
+  })),
+  on(CalendarActions.setActiveMonth, (state, { date }) => ({
+    ...state,
+    activeMonth: getActiveMonth(date),
+    activeMonthNumber: getActiveMonthNumber(date),
+    activeMonthDate: getFirstMonthDay(date),
   }))
 );
 
@@ -83,7 +90,7 @@ function getActiveMonth(activeDate: Date): Date[][] {
 
   const activeMonth: Date[][] = [];
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 6; i++) {
     const week: Date[] = [];
 
     for (let j = 0; j < 7; j++) {
@@ -93,6 +100,10 @@ function getActiveMonth(activeDate: Date): Date[][] {
       week.push(date);
     }
 
+    // check if the first day of the last week is a part of the month or not
+    // if not we don't push it
+    if (week[0].getMonth() !== firstDayOfMonth.getMonth() && i == 5) break;
+
     activeMonth.push(week);
   }
   return activeMonth;
@@ -100,6 +111,11 @@ function getActiveMonth(activeDate: Date): Date[][] {
 
 function getActiveMonthNumber(activeDate: Date): number {
   return activeDate.getMonth() + 1;
+}
+
+// setting the first day as the value of the active month date so we can navigate between months
+function getFirstMonthDay(date: Date): Date {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
 }
 
 export function reducer(state: CalendarState, action: Action) {

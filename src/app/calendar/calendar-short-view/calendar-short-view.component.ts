@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subject, takeUntil } from "rxjs";
-import { setActiveDate } from "~/app/store/actions/calendar.actions";
+import {
+  setActiveDate,
+  setActiveMonth,
+} from "~/app/store/actions/calendar.actions";
 import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 
 @Component({
@@ -21,6 +24,7 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
     }>
   > = [];
   activeDate: Date = new Date();
+  activeMonth: Date = new Date();
 
   private onDestroy$: Subject<void> = new Subject<void>();
 
@@ -31,6 +35,7 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
       .subscribe((state: CalendarState) => {
         this.month = state.activeMonth.map((weeks: Date[]) => {
           this.activeDate = state.activeDate;
+          this.activeMonth = state.activeMonthDate;
           return weeks.map((day: Date) => {
             return {
               day: day,
@@ -52,7 +57,8 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
     let res: boolean = false;
     if (
       firstDate.getDate() === secondDate.getDate() &&
-      firstDate.getMonth() === secondDate.getMonth()
+      firstDate.getMonth() === secondDate.getMonth() &&
+      firstDate.getFullYear() === secondDate.getFullYear()
     ) {
       res = true;
     }
@@ -73,7 +79,23 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  onLeftTap(): void {}
+  onPrevMonth(): void {
+    let prevMonthDate = this.activeMonth;
+    prevMonthDate.setMonth(this.activeMonth.getMonth() - 1);
+    this.store.dispatch(setActiveMonth({ date: prevMonthDate }));
+  }
 
-  onRightTap(): void {}
+  onNextMonth(): void {
+    let nextMonthDate = this.activeMonth;
+    nextMonthDate.setMonth(this.activeMonth.getMonth() + 1);
+    this.store.dispatch(setActiveMonth({ date: nextMonthDate }));
+  }
+
+  generateGridRows() {
+    return Array.from({ length: this.month.length }, () => "*").join(",");
+  }
+
+  generateGridColumns() {
+    return Array.from({ length: this.days.length }, () => "*").join(",");
+  }
 }

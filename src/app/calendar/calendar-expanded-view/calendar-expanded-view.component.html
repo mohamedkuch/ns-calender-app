@@ -1,13 +1,18 @@
 <StackLayout class="calendar-expanded">
-  <FlexboxLayout flexDirection="row" class="calendar-expanded-top-wrapper p-2">
+  <FlexboxLayout flexDirection="row" class="calendar-expanded-top-wrapper">
     <Label
       flexGrow="1"
-      class="calendar-expanded-date"
+      class="calendar-expanded-date ml-2"
       text="6 - 12 October 2018"
     ></Label>
     <FlexboxLayout>
-      <GridLayout (tap)="onLeftTap()" class="arrow-left mr-2"> </GridLayout>
-      <GridLayout (tap)="onRightTap()" class="arrow-right"> </GridLayout>
+      <GridLayout (tap)="onLeftTap()" height="60" width="40">
+        <StackLayout class="arrow-left"> </StackLayout>
+      </GridLayout>
+
+      <GridLayout (tap)="onRightTap()" height="60" width="40">
+        <StackLayout class="arrow-right"> </StackLayout>
+      </GridLayout>
     </FlexboxLayout>
   </FlexboxLayout>
 
