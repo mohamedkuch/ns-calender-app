@@ -1,5 +1,5 @@
 <FlexboxLayout class="p-2">
-    <FlexboxLayout class="dropDownWrapper" width="35%">
+    <FlexboxLayout class="drop-down" width="35%">
       <DropDown
         #dd
         itemsTextAlignment="center"
@@ -8,13 +8,13 @@
         (selectedIndexChanged)="onchange($event)"
         (opened)="onopen()"
         (closed)="onclose()"
-        class="propertiesSelectMenu"
+        class="drop-down-menu"
         width="100%"
         backroundColor="white"
       >
       </DropDown>
     </FlexboxLayout>
-    <FlexboxLayout class="dropDownWrapper ml-3" width="35%">
+    <FlexboxLayout class="drop-down ml-2" width="35%">
       <DropDown
         #dd
         itemsTextAlignment="center"
@@ -23,7 +23,7 @@
         (selectedIndexChanged)="onchange($event)"
         (opened)="onopen()"
         (closed)="onclose()"
-        class="agentsSelectMenu"
+        class="drop-down-menu"
         width="100%"
         backroundColor="white"
       ></DropDown>

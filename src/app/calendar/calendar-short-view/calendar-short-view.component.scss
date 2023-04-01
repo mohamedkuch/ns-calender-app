@@ -1,0 +1,16 @@
+.calendar {
+  background-color: white;
+  border-color: #e7e7e7;
+  border-width: 2;
+  &-date {
+    font-weight: bold;
+  }
+  &-top-wrapper {
+    border-color: #e7e7e7;
+    border-bottom-width: 2;
+  }
+}
+
+.gray-text {
+  color: #a3a3a3;
+}

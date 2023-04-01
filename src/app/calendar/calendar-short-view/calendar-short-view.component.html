@@ -1,3 +1,40 @@
-<FlexboxLayout>
-  <Label id="2" text="calander short view"></Label>
-</FlexboxLayout>
+<StackLayout class="calendar">
+  <FlexboxLayout flexDirection="row" class="calendar-top-wrapper p-2">
+    <Label flexGrow="1" class="calendar-date" text="October 2017"></Label>
+    <Label text="Arrows"></Label>
+  </FlexboxLayout>
+
+  <StackLayout flexGrow="1" class="p-2">
+    <GridLayout rows="auto" columns="*,*,*,*,*,*,*" width="100%">
+      <ng-container *ngFor="let day of days; let i = index">
+        <StackLayout
+          [row]="0"
+          [col]="i"
+          height="50"
+          verticalAlignment="top"
+          horizontalAlignment="center"
+          class="day"
+          [ngClass]="i === 0 || i === days.length - 1 ? 'gray-text' : ''"
+        >
+          <Label [text]="day" class="text-center"></Label>
+        </StackLayout>
+      </ng-container>
+    </GridLayout>
+
+    <GridLayout rows="*,*,*,*,*" columns="*,*,*,*,*,*,*">
+      <ng-container *ngFor="let week of weeks; let i = index">
+        <ng-container *ngFor="let date of week; let j = index">
+          <StackLayout
+            [row]="i"
+            [col]="j"
+            [height]="date ? '100%' : 'auto'"
+            [verticalAlignment]="date ? 'middle' : 'top'"
+            [horizontalAlignment]="date ? 'center' : 'left'"
+          >
+            <Label [text]="date" class="text-center"></Label>
+          </StackLayout>
+        </ng-container>
+      </ng-container>
+    </GridLayout>
+  </StackLayout>
+</StackLayout>
