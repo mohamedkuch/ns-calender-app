@@ -2,4 +2,37 @@
   border-width: 1 2 2 2;
   border-color: #e7e7e7;
   background-color: white;
+  &-header {
+    color: #2b2e33;
+    font-weight: bold;
+    letter-spacing: 0.1;
+  }
+  &-appart-bg {
+    background-image: url("~/app/assets/houseBG.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4;
+  }
+  &-title {
+    font-weight: bold;
+  }
+}
+.calendar-icon,
+.clock-icon,
+.person-icon {
+  height: 14;
+  width: 14;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+.calendar-icon {
+  background-image: url("~/app/assets/calendar.png");
+}
+.clock-icon {
+  background-image: url("~/app/assets/clock.png");
+}
+.person-icon {
+  background-image: url("~/app/assets/user.png");
 }
