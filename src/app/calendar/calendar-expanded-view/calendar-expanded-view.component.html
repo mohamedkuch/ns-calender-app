@@ -10,4 +10,66 @@
       <GridLayout (tap)="onRightTap()" class="arrow-right"> </GridLayout>
     </FlexboxLayout>
   </FlexboxLayout>
+
+  <GridLayout
+    rows="auto"
+    [columns]="generateGridColumns()"
+    width="100%"
+    class="py-1 calendar-expanded-days-list"
+  >
+    <ng-container *ngFor="let day of days; let i = index">
+      <StackLayout
+        [row]="0"
+        [col]="i + 1"
+        verticalAlignment="top"
+        horizontalAlignment="center"
+      >
+        <Label [text]="day" class="text-center"></Label>
+      </StackLayout>
+    </ng-container>
+  </GridLayout>
+  <GridLayout rows="*" flexGrow="1">
+    <ScrollView orientation="vertical">
+      <GridLayout [rows]="generateGridRows()" [columns]="generateGridColumns()">
+        <ng-container *ngFor="let hour of hours; let i = index">
+          <StackLayout
+            [row]="i"
+            [col]="0"
+            [height]="'90'"
+            [ngStyle]="{
+              'border-width': '1 1 1 0'
+            }"
+            class="calendar-expanded-date-time-card p-small"
+          >
+            <Label [text]="hour" class="calendar-expanded-hour-label"></Label>
+          </StackLayout>
+        </ng-container>
+
+        <ng-container *ngFor="let hour of hours; let i = index">
+          <ng-container *ngFor="let day of days; let j = index">
+            <StackLayout
+              [row]="i"
+              [col]="j + 1"
+              [height]="'90'"
+              [ngStyle]="{
+                'border-width': j === days.length - 1 ? '1 0 1 1' : '1',
+                'border-color': j == 0 ? '#e7e7e7' : '#2B2E33'
+              }"
+              class="calendar-expanded-date-time-card"
+            >
+              <ns-viewing-card
+                [data]="{
+                  viewingNumber: 3,
+                  imageUrls: [
+                    'https://images.pexels.com/photos/1974596/pexels-photo-1974596.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                  ]
+                }"
+                [isInPast]="j === 0"
+              ></ns-viewing-card>
+            </StackLayout>
+          </ng-container>
+        </ng-container>
+      </GridLayout>
+    </ScrollView>
+  </GridLayout>
 </StackLayout>

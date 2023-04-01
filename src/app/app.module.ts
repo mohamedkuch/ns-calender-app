@@ -7,7 +7,7 @@ import { DropDownModule } from "nativescript-drop-down/angular";
 import { CalendarShortViewComponent } from "./calendar/calendar-short-view/calendar-short-view.component";
 import { CalendarNextViewComponent } from "./calendar/calendar-next-view/calendar-next-view.component";
 import { CalendarExpandedViewComponent } from "./calendar/calendar-expanded-view/calendar-expanded-view.component";
-
+import { ViewingCardComponent } from "./calendar/calendar-expanded-view/viewing-card/viewing-card.component";
 @NgModule({
   bootstrap: [AppComponent],
   imports: [NativeScriptModule, DropDownModule],
@@ -18,6 +18,7 @@ import { CalendarExpandedViewComponent } from "./calendar/calendar-expanded-view
     CalendarShortViewComponent,
     CalendarNextViewComponent,
     CalendarExpandedViewComponent,
+    ViewingCardComponent
   ],
   providers: [],
   schemas: [NO_ERRORS_SCHEMA],

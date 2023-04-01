@@ -79,6 +79,10 @@
 }
 
 /* padding helper classes */
+.p-small {
+  padding: 5;
+}
+
 .p-1 {
   padding: 10;
 }

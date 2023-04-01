@@ -1,0 +1,25 @@
+.isInPast {
+  background-color: #f4f4f4;
+}
+
+.isInFuture {
+  background-color: #2B2E33;
+
+  .viewing-card {
+    &-text {
+      color: white;
+    }
+  }
+}
+
+.viewing-card {
+  &-text {
+    font-weight: bold;
+    font-size: 10;
+  }
+  &-image-wrapper {
+    background-color: white;
+    padding: 2;
+    border-radius: 2;
+  }
+}

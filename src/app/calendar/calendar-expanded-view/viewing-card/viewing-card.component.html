@@ -1,0 +1,22 @@
+<FlexboxLayout
+  flexDirection="column"
+  justifyContent="space-between"
+  alignItems="flex-start"
+  class="p-small"
+  [height]="'100%'"
+  [class.isInPast]="isInPast"
+  [class.isInFuture]="!isInPast"
+>
+  <Label
+    class="viewing-card-text"
+    [text]="data.viewingNumber + ' VIEWINGS'"
+  ></Label>
+  <FlexboxLayout class="viewing-card-image-wrapper">
+    <Image
+      width="30"
+      height="30"
+      stretch="aspectFill"
+      [src]="data.imageUrls[0]"
+    />
+  </FlexboxLayout>
+</FlexboxLayout>

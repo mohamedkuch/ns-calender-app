@@ -12,6 +12,10 @@ export class CalendarShortViewComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    this.initWeeksArray();
+  }
+
+  initWeeksArray(): void {
     // Get current month and year
     const today = new Date();
     const year = today.getFullYear();

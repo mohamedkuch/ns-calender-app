@@ -9,4 +9,16 @@
     border-color: #e7e7e7;
     border-bottom-width: 2;
   }
+  &-days-list {
+    border-width: 0 0 1 0;
+    border-color: #e7e7e7;
+  }
+  &-date-time-card {
+    border-width: 1;
+    border-color: #e7e7e7;
+  }
+  &-hour-label{
+    font-weight: bold;
+    font-size: 10;
+  }
 }
