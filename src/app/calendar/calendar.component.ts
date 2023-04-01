@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { Store, select } from "@ngrx/store";
-import { Observable } from "rxjs";
-
-import { Increment, Decrement, Reset } from "../store/actions/calendar.actions";
+import { Store } from "@ngrx/store";
+import { CalendarState } from "../store/reducers/calendar.reducer";
+import { setActiveDate } from "../store/actions/calendar.actions";
 
 @Component({
   selector: "ns-calendar",
@@ -10,13 +9,13 @@ import { Increment, Decrement, Reset } from "../store/actions/calendar.actions";
   styleUrls: ["./calendar.component.scss"],
 })
 export class CalendarComponent implements OnInit {
-  data$: Observable<any>;
-
-  constructor(private store: Store<{ calendarState: any }>) {
-    store.pipe(select("calendarState")).subscribe((data) => {
-      console.log("####", data);
+  constructor(private store: Store<{ calendarState: CalendarState }>) {
+    this.store.select("calendarState").subscribe((state: CalendarState) => {
+      console.log("#### state", state);
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(setActiveDate({ date: new Date("10/05/2000") }));
+  }
 }
