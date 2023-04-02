@@ -25,7 +25,7 @@
           height="50"
           verticalAlignment="top"
           horizontalAlignment="center"
-          [ngClass]="i === 0 || i === days.length - 1 ? 'gray-text' : ''"
+          [ngClass]="i === 0 || i === days.length - 1 ? 'text-grey' : ''"
         >
           <Label [text]="day" class="text-center"></Label>
         </StackLayout>
@@ -52,7 +52,7 @@
           >
             <Label
               [text]="date.dayNumber"
-              [ngClass]="date.isTextGrayed ? 'gray-text' : ''"
+              [ngClass]="date.isTextGrayed ? 'text-grey' : ''"
               class="text-center calendar-day-text"
             ></Label>
           </StackLayout>

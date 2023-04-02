@@ -44,6 +44,26 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<{ calendarState: CalendarState }>) {}
 
+  ngOnInit(): void {
+    this.store
+      .select("calendarState")
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((state: CalendarState) => {
+        this.activeDate = state.activeDate;
+        this.activeWeek = state.activeWeek;
+        this.WeekDateString = this.setWeekDateString(state.activeWeek);
+        this.days = state.activeWeek.map((day: Date) => {
+          const dayOfWeek = dayNames[day.getDay()];
+          return {
+            dayString: `${day.getDate()} ${dayOfWeek}`,
+            isActive: this.isDatesEqual(day, state.activeDate),
+            isInPast: this.isDayInPast(day, state.activeDate),
+          };
+        });
+      });
+    this.initHoursArray();
+  }
+
   setWeekDateString(activeWeek: Date[]): string {
     const firstDateOfWeek = new Date(activeWeek[0]);
     const lastDateOfWeek = new Date(activeWeek[activeWeek.length - 1]);
@@ -66,24 +86,12 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  ngOnInit(): void {
-    this.store
-      .select("calendarState")
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((state: CalendarState) => {
-        this.activeDate = state.activeDate;
-        this.activeWeek = state.activeWeek;
-        this.WeekDateString = this.setWeekDateString(state.activeWeek);
-        this.days = state.activeWeek.map((day: Date) => {
-          const dayOfWeek = dayNames[day.getDay()];
-          return {
-            dayString: `${day.getDate()} ${dayOfWeek}`,
-            isActive: this.isDatesEqual(day, state.activeDate),
-            isInPast: true,
-          };
-        });
-      });
-    this.initHoursArray();
+  isDayInPast(day: Date, activeDay: Date): boolean {
+    return (
+      day.getDate() < activeDay.getDate() &&
+      day.getMonth() <= activeDay.getMonth() &&
+      day.getFullYear() <= activeDay.getFullYear()
+    );
   }
 
   formatHourTime(timeString: string): string {
