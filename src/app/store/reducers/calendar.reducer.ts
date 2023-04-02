@@ -1,6 +1,8 @@
 import { Action, createReducer, on } from "@ngrx/store";
 import { Appointment } from "../../models/appointment.model";
 import * as CalendarActions from "../actions/calendar.actions";
+// Load appointments from JSON file (Mock Data)
+const APPOINTMENTS_JSON = require("../../assets/data/data.json");
 
 export interface CalendarState {
   activeDate: Date;
@@ -19,10 +21,9 @@ export const initialState: CalendarState = {
   activeMonth: getActiveMonth(new Date()),
   activeMonthNumber: getActiveMonthNumber(new Date()),
   activeMonthDate: getFirstMonthDay(new Date()),
-  appointments: [],
+  appointments: getAppointments(APPOINTMENTS_JSON),
 };
 
-// Load appointments from JSON file (Mock Data)
 // Extra : if we want to request the data from a server we need to create effect file
 // and implement the logic to listen to the action of loading the appointments and request
 // the data and merge it to our appointments object and also add maybe loading and
@@ -50,6 +51,10 @@ export const calendarReducer = createReducer(
     activeMonth: getActiveMonth(date),
     activeMonthNumber: getActiveMonthNumber(date),
     activeMonthDate: getFirstMonthDay(date),
+  })),
+  on(CalendarActions.setAppointments, (state, { data }) => ({
+    ...state,
+    appointments: getAppointments(data),
   }))
 );
 
@@ -65,7 +70,6 @@ export const calendarReducer = createReducer(
 // example activeDate = 01/04/2023 => saturday
 // dayOfWeekIndex = 6
 // sundayDate = 01/04/2023 - 6 days = 26/03/2023
-
 function getActiveWeek(activeDate: Date): Date[] {
   const dayOfWeekIndex = activeDate.getDay();
 
@@ -123,6 +127,16 @@ function getActiveMonthNumber(activeDate: Date): number {
 // setting the first day as the value of the active month date so we can navigate between months
 function getFirstMonthDay(date: Date): Date {
   return new Date(Date.UTC(date.getFullYear(), date.getMonth(), 1));
+}
+
+// Getting appointments and map JSON data to our appointments state array
+function getAppointments(data: JSON): Appointment[] {
+  let result = [];
+  data["data"]["appointments"]["nodes"].map((node) => {
+    result.push(new Appointment(node));
+  });
+
+  return result;
 }
 
 export function reducer(state: CalendarState, action: Action) {

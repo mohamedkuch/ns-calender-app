@@ -35,27 +35,33 @@
     <GridLayout [rows]="generateGridRows()" [columns]="generateGridColumns()">
       <ng-container *ngFor="let week of month; let i = index">
         <ng-container *ngFor="let date of week; let j = index">
-          <StackLayout
-            [row]="i"
-            [col]="j"
-            height="100%"
-            width="100%"
-            verticalAlignment="middle"
-            horizontalAlignment="center"
-            [class.calendar-active-week-card]="date.isActiveWeek"
-            [class.calendar-active-day-card]="date.isActiveDay"
-            [class.border-radius-right]="
-              j == week.length - 1 && !date.isActiveDay
-            "
-            [class.border-radius-left]="j == 0 && !date.isActiveDay"
-            (tap)="onDateChanged(date.day)"
-          >
-            <Label
-              [text]="date.dayNumber"
-              [ngClass]="date.isTextGrayed ? 'text-grey' : ''"
-              class="text-center calendar-day-text"
-            ></Label>
-          </StackLayout>
+          <FlexLayout [row]="i" [col]="j">
+            <StackLayout
+              height="100%"
+              width="100%"
+              [class.calendar-active-week-card]="date.isActiveWeek"
+              [class.calendar-active-day-card]="date.isActiveDay"
+              verticalAlignment="middle"
+              horizontalAlignment="center"
+              [class.border-radius-right]="
+                j == week.length - 1 && !date.isActiveDay
+              "
+              [class.border-radius-left]="j == 0 && !date.isActiveDay"
+              (tap)="onDateChanged(date.day)"
+            >
+              <Label
+                [text]="date.dayNumber"
+                [ngClass]="date.isTextGrayed ? 'text-grey' : ''"
+                class="text-center calendar-day-text"
+              ></Label>
+            </StackLayout>
+            <AbsoluteLayout
+              *ngIf="date.hasAppointment"
+              [backgroundColor]="date.isActiveDay ? '#232323' : '#3486ef'"
+              [class.calendar-appointment-bubble]="true"
+            >
+            </AbsoluteLayout>
+          </FlexLayout>
         </ng-container>
       </ng-container>
     </GridLayout>

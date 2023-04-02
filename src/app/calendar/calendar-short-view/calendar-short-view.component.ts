@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subject, takeUntil } from "rxjs";
+import { Appointment } from "~/app/models/appointment.model";
 import {
   setActiveDate,
   setActiveMonth,
@@ -21,6 +22,7 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
       isTextGrayed: boolean;
       isActiveWeek: boolean;
       isActiveDay: boolean;
+      hasAppointment: boolean;
     }>
   > = [];
   activeDate: Date = new Date();
@@ -45,6 +47,7 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
               isTextGrayed: day.getMonth() + 1 !== state.activeMonthNumber,
               isActiveWeek: this.isDayInActiveWeek(day, state.activeWeek),
               isActiveDay: this.isDatesEqual(day, state.activeDate),
+              hasAppointment: this.hasAppointment(day, state.appointments),
             };
           });
         });
@@ -61,6 +64,14 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
       res = true;
     }
     return res;
+  }
+
+  // logic to determin if the day has an appointment
+  hasAppointment(day: Date, apointmentsArray: Appointment[]): boolean {
+    const result = apointmentsArray.filter((singleAppointment) =>
+      this.isDatesEqual(singleAppointment.date, day)
+    );
+    return result.length > 0;
   }
 
   onDateChanged(newDay: Date): void {

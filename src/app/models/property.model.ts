@@ -16,7 +16,7 @@ export class Property {
     this.inviteeCount = json["inviteeCount"];
     this.address = new Address(json["address"]);
     this.attachments = json["attachments"];
-    this.user = new User(json["attachments"]);
+    this.user = new User(json["user"]);
     this.__typename = json["__typename"];
   }
 }

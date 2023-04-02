@@ -14,3 +14,8 @@ export const setActiveMonth = createAction(
   "[Calendar] Set Active Month",
   props<{ date: Date }>()
 );
+
+export const setAppointments = createAction(
+  "[Calendar] Set Appointments",
+  props<{ data: JSON }>()
+);

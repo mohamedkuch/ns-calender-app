@@ -3,7 +3,7 @@
 }
 
 .isInFuture {
-  background-color: #2B2E33;
+  background-color: #2b2e33;
 
   .viewing-card {
     &-text {
@@ -17,9 +17,12 @@
     font-weight: bold;
     font-size: 10;
   }
-  &-image-wrapper {
-    background-color: white;
-    padding: 2;
+
+  &-image {
+    background-image: url("~/app/assets/houseBG.jpg");
+    background-size: contain;
     border-radius: 2;
+    border-width: 2;
+    border-color: white;
   }
 }

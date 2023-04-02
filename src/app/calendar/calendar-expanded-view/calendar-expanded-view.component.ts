@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subject, takeUntil } from "rxjs";
+import { Appointment } from "~/app/models/appointment.model";
 import { setActiveWeek } from "~/app/store/actions/calendar.actions";
 import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 
@@ -34,7 +35,12 @@ const monthNames = [
   styleUrls: ["./calendar-expanded-view.component.scss"],
 })
 export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
-  days: Array<{ dayString: string; isActive: boolean; isInPast: boolean }> = [];
+  days: Array<{
+    dayString: string;
+    isActive: boolean;
+    isInPast: boolean;
+    appointments: Appointment[];
+  }> = [];
   hours: Array<string> = [];
   activeDate: Date = new Date();
   activeWeek: Date[];
@@ -58,6 +64,7 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
             dayString: `${day.getDate()} ${dayOfWeek}`,
             isActive: this.isDatesEqual(day, state.activeDate),
             isInPast: this.isDayInPast(day, state.activeDate),
+            appointments: this.dayHasAppointments(day, state.appointments),
           };
         });
       });
@@ -68,10 +75,27 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
     const firstDateOfWeek = new Date(activeWeek[0]);
     const lastDateOfWeek = new Date(activeWeek[activeWeek.length - 1]);
 
-    const monthName = monthNames[firstDateOfWeek.getMonth()];
+    let monthName = monthNames[firstDateOfWeek.getMonth()];
+    let monthName_2 = monthNames[lastDateOfWeek.getMonth()];
+
+    if (monthName != monthName_2) {
+      monthName = monthName + "-" + monthName_2;
+    }
     const year = firstDateOfWeek.getFullYear();
 
     return `${firstDateOfWeek.getDate()} - ${lastDateOfWeek.getDate()}  ${monthName} ${year}`;
+  }
+
+  // logic to determin if the day has an appointment
+  dayHasAppointments(
+    day: Date,
+    apointmentsArray: Appointment[]
+  ): Appointment[] {
+    const result = apointmentsArray.filter((singleAppointment) =>
+      this.isDatesEqual(singleAppointment.date, day)
+    );
+
+    return result;
   }
 
   isDatesEqual(firstDate: Date, secondDate: Date): boolean {
@@ -100,7 +124,7 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
   }
 
   initHoursArray(): void {
-    for (let i = 8; i < 20; i++) {
+    for (let i = 8; i <= 20; i++) {
       const hour = new Date();
       hour.setHours(i);
       hour.setMinutes(0);
