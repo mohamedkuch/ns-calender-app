@@ -54,3 +54,21 @@
 .user-icon {
   background-image: url("~/app/assets/user_active.png");
 }
+
+.agent-bg,
+.house-bg {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 40;
+  height: 40;
+  border-radius: 4;
+}
+
+.agent-bg {
+  background-image: url("~/app/assets/agent.jpg");
+}
+
+.house-bg {
+  background-image: url("~/app/assets/houseBG.jpg");
+}

@@ -27,8 +27,8 @@
       <StackLayout class="viewing-card m-2">
         <FlexboxLayout justifyContent="space-between" class="mb-2">
           <FlexboxLayout>
-            <Label text="Image"></Label>
-            <StackLayout class="ml-2">
+            <FlexboxLayout class="house-bg"> </FlexboxLayout>
+            <StackLayout class="ml-1">
               <Label [text]="appointment.property.name"></Label>
               <Label
                 class="text-grey"
@@ -46,8 +46,8 @@
             </StackLayout>
           </FlexboxLayout>
           <FlexboxLayout>
-            <Label text="Image"></Label>
-            <StackLayout class="ml-2">
+            <FlexboxLayout class="agent-bg"> </FlexboxLayout>
+            <StackLayout class="ml-1">
               <Label text="Leroy Alvarado"></Label>
               <Label class="text-grey" text="Agent"></Label>
             </StackLayout>
@@ -59,11 +59,26 @@
             <FlexboxLayout class="calendar-icon"> </FlexboxLayout>
             <Label class="mx-1" [text]="dateString | date : 'd MMMM y'"></Label>
             <FlexboxLayout class="clock-icon"> </FlexboxLayout>
-            <Label class="mx-1" [text]="hourString"></Label>
+            <Label
+              class="mx-1"
+              [text]="
+                appointment.date.getUTCMinutes() < 10
+                  ? appointment.date.getUTCHours().toString() +
+                    ':0' +
+                    appointment.date.getUTCMinutes().toString()
+                  : appointment.date.getUTCHours().toString() +
+                    ':' +
+                    appointment.date.getUTCMinutes().toString()
+              "
+            ></Label>
           </FlexboxLayout>
           <FlexboxLayout justifyContent="center" flexGrow="1">
             <FlexboxLayout class="user-icon mr-1"> </FlexboxLayout>
-            <Label [text]="'4 | 6'"></Label>
+            <Label
+              [text]="
+                appointment.attendeeCount + ' | ' + appointment.maxInviteeCount
+              "
+            ></Label>
           </FlexboxLayout>
           <FlexboxLayout class="menu-icon"> </FlexboxLayout>
         </FlexboxLayout>
