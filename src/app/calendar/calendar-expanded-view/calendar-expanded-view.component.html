@@ -3,14 +3,14 @@
     <Label
       flexGrow="1"
       class="calendar-expanded-date ml-2"
-      text="6 - 12 October 2018"
+      [text]="WeekDateString"
     ></Label>
     <FlexboxLayout>
       <GridLayout (tap)="onLeftTap()" height="60" width="40">
         <StackLayout class="arrow-left"> </StackLayout>
       </GridLayout>
 
-      <GridLayout (tap)="onRightTap()" height="60" width="40">
+      <GridLayout (tap)="onRightTap()" height="60" width="45">
         <StackLayout class="arrow-right"> </StackLayout>
       </GridLayout>
     </FlexboxLayout>
@@ -28,8 +28,13 @@
         [col]="i + 1"
         verticalAlignment="top"
         horizontalAlignment="center"
+        class="calendar-expanded-day-card"
+        [class.calendar-expanded-day-card-active]="day.isActive"
       >
-        <Label [text]="day" class="text-center"></Label>
+        <Label
+          [text]="day.dayString"
+          class="text-center calendar-expanded-day"
+        ></Label>
       </StackLayout>
     </ng-container>
   </GridLayout>

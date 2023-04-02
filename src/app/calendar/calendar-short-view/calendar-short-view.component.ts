@@ -28,7 +28,9 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
 
   private onDestroy$: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<{ calendarState: CalendarState }>) {
+  constructor(private store: Store<{ calendarState: CalendarState }>) {}
+
+  ngOnInit(): void {
     this.store
       .select("calendarState")
       .pipe(takeUntil(this.onDestroy$))
@@ -47,10 +49,6 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
           });
         });
       });
-  }
-  ngOnDestroy(): void {
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
   }
 
   isDatesEqual(firstDate: Date, secondDate: Date): boolean {
@@ -77,8 +75,6 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
     return res;
   }
 
-  ngOnInit(): void {}
-
   onPrevMonth(): void {
     let prevMonthDate = this.activeMonth;
     prevMonthDate.setMonth(this.activeMonth.getMonth() - 1);
@@ -97,5 +93,10 @@ export class CalendarShortViewComponent implements OnInit, OnDestroy {
 
   generateGridColumns() {
     return Array.from({ length: this.days.length }, () => "*").join(",");
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 }

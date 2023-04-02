@@ -1,4 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Store } from "@ngrx/store";
+import { Subject, takeUntil } from "rxjs";
+import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 
 const dayNames: Array<string> = [
   "SUN",
@@ -9,21 +12,76 @@ const dayNames: Array<string> = [
   "FRI",
   "SAT",
 ];
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 @Component({
   selector: "ns-calendar-expanded-view",
   templateUrl: "./calendar-expanded-view.component.html",
   styleUrls: ["./calendar-expanded-view.component.scss"],
 })
-export class CalendarExpandedViewComponent implements OnInit {
-  days: Array<string> = [];
+export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
+  days: Array<{ dayString: string; isActive: boolean; isInPast: boolean }> = [];
   hours: Array<string> = [];
-  data: Array<Array<string>> = [];
+  activeDate: Date = new Date();
+  activeWeek: Date[];
+  WeekDateString: string = "";
 
-  constructor() {}
+  private onDestroy$: Subject<void> = new Subject<void>();
+
+  constructor(private store: Store<{ calendarState: CalendarState }>) {}
+
+  setWeekDateString(activeWeek: Date[]): string {
+    const firstDateOfWeek = new Date(activeWeek[0]);
+    const lastDateOfWeek = new Date(activeWeek[activeWeek.length - 1]);
+
+    const monthName = monthNames[firstDateOfWeek.getMonth()];
+    const year = firstDateOfWeek.getFullYear();
+
+    return `${firstDateOfWeek.getDate()} - ${lastDateOfWeek.getDate()}  ${monthName} ${year}`;
+  }
+
+  isDatesEqual(firstDate: Date, secondDate: Date): boolean {
+    let res: boolean = false;
+    if (
+      firstDate.getDate() === secondDate.getDate() &&
+      firstDate.getMonth() === secondDate.getMonth() &&
+      firstDate.getFullYear() === secondDate.getFullYear()
+    ) {
+      res = true;
+    }
+    return res;
+  }
 
   ngOnInit(): void {
-    this.initDaysArray();
+    this.store
+      .select("calendarState")
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((state: CalendarState) => {
+        this.activeDate = state.activeDate;
+        this.activeWeek = state.activeWeek;
+        this.WeekDateString = this.setWeekDateString(state.activeWeek);
+        this.days = state.activeWeek.map((day: Date) => {
+          const dayOfWeek = dayNames[day.getDay()];
+          return {
+            dayString: `${day.getDate()} ${dayOfWeek}`,
+            isActive: this.isDatesEqual(day, state.activeDate),
+            isInPast: true,
+          };
+        });
+      });
     this.initHoursArray();
   }
 
@@ -51,31 +109,6 @@ export class CalendarExpandedViewComponent implements OnInit {
     }
   }
 
-  initDaysArray(): void {
-    // Get current month and year
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
-
-    // Get the number of days in the month
-    const numDays = new Date(year, month + 1, 0).getDate();
-
-    // Get the first day of the month
-    const firstDay = new Date(year, month, 1).getDay();
-
-    // Generate an array of all the dates in the month
-    const dates = Array.from({ length: numDays }, (_, i) => i + 1);
-
-    // Add empty cells to the beginning of the array to align the first date with the correct weekday
-    for (let i = 0; i < firstDay; i++) {
-      dates.unshift(null);
-    }
-
-    this.days = dates
-      .slice(7, 14)
-      .map((date, index) => `${date} ${dayNames[index]}`);
-  }
-
   generateGridRows() {
     return Array.from({ length: this.hours.length }, () => "*").join(",");
   }
@@ -86,8 +119,12 @@ export class CalendarExpandedViewComponent implements OnInit {
     );
   }
 
-  onLeftTap(): void {
-  }
+  onLeftTap(): void {}
 
   onRightTap(): void {}
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 }
