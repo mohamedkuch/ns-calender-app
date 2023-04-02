@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subject, takeUntil } from "rxjs";
+import { setActiveWeek } from "~/app/store/actions/calendar.actions";
 import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 
 const dayNames: Array<string> = [
@@ -119,9 +120,19 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  onLeftTap(): void {}
+  onPrevWeek(): void {
+    let prevWeekDate = new Date(
+      this.activeWeek[0].getTime() - 7 * 24 * 60 * 60 * 1000
+    );
+    this.store.dispatch(setActiveWeek({ date: prevWeekDate }));
+  }
 
-  onRightTap(): void {}
+  onNextWeek(): void {
+    let nextWeekDate = new Date(
+      this.activeWeek[0].getTime() + 7 * 24 * 60 * 60 * 1000
+    );
+    this.store.dispatch(setActiveWeek({ date: nextWeekDate }));
+  }
 
   ngOnDestroy(): void {
     this.onDestroy$.next();

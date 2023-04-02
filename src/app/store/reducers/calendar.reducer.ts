@@ -38,6 +38,13 @@ export const calendarReducer = createReducer(
     activeMonthNumber: getActiveMonthNumber(date),
     activeMonthDate: getFirstMonthDay(date),
   })),
+  on(CalendarActions.setActiveWeek, (state, { date }) => ({
+    ...state,
+    activeWeek: getActiveWeek(date),
+    activeMonth: getActiveMonth(date),
+    activeMonthNumber: getActiveMonthNumber(date),
+    activeMonthDate: getFirstMonthDay(date),
+  })),
   on(CalendarActions.setActiveMonth, (state, { date }) => ({
     ...state,
     activeMonth: getActiveMonth(date),

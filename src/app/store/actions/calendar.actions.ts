@@ -5,6 +5,11 @@ export const setActiveDate = createAction(
   props<{ date: Date }>()
 );
 
+export const setActiveWeek = createAction(
+  "[Calendar] Set Active Week",
+  props<{ date: Date }>()
+);
+
 export const setActiveMonth = createAction(
   "[Calendar] Set Active Month",
   props<{ date: Date }>()

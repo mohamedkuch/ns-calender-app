@@ -6,11 +6,11 @@
       [text]="WeekDateString"
     ></Label>
     <FlexboxLayout>
-      <GridLayout (tap)="onLeftTap()" height="60" width="40">
+      <GridLayout (tap)="onPrevWeek()" height="60" width="40">
         <StackLayout class="arrow-left"> </StackLayout>
       </GridLayout>
 
-      <GridLayout (tap)="onRightTap()" height="60" width="45">
+      <GridLayout (tap)="onNextWeek()" height="60" width="45">
         <StackLayout class="arrow-right"> </StackLayout>
       </GridLayout>
     </FlexboxLayout>
