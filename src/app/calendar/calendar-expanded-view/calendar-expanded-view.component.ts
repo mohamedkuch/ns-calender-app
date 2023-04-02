@@ -39,7 +39,7 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
     dayString: string;
     isActive: boolean;
     isInPast: boolean;
-    appointments: Appointment[];
+    appointments: Array<{ data: Appointment; row: number }>;
   }> = [];
   hours: Array<string> = [];
   activeDate: Date = new Date();
@@ -90,12 +90,31 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
   dayHasAppointments(
     day: Date,
     apointmentsArray: Appointment[]
-  ): Appointment[] {
-    const result = apointmentsArray.filter((singleAppointment) =>
-      this.isDatesEqual(singleAppointment.date, day)
-    );
+  ): Array<{ data: Appointment; row: number }> {
+    const result = apointmentsArray
+      .filter((singleAppointment) =>
+        this.isDatesEqual(singleAppointment.date, day)
+      )
+      .map((res: Appointment) => {
+        const row = res.date.getUTCHours() - 8; // substract 8 hours
+        return { data: res, row: row };
+      });
 
     return result;
+  }
+
+  hourHasAppointment(
+    row: number,
+    day: {
+      dayString: string;
+      isActive: boolean;
+      isInPast: boolean;
+      appointments: Array<{ data: Appointment; row: number }>;
+    }
+  ): Appointment[] {
+    return day.appointments
+      .filter((element) => element.row === row)
+      .map((element) => element.data);
   }
 
   isDatesEqual(firstDate: Date, secondDate: Date): boolean {

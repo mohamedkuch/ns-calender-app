@@ -44,6 +44,7 @@
       <GridLayout [rows]="generateGridRows()" [columns]="generateGridColumns()">
         <ng-container *ngFor="let hour of hours; let i = index">
           <FlexboxLayout
+            flexDirection="column"
             [row]="i"
             [col]="0"
             [height]="'90'"
@@ -62,14 +63,13 @@
               [row]="i"
               [col]="j + 1"
               [height]="'90'"
-              [ngStyle]="{
-                'border-width': '1',
-                'border-color': day.isInPast ? '#e7e7e7' : '#2B2E33'
-              }"
               class="calendar-expanded-date-time-card"
             >
               <ns-viewing-card
-                *ngIf="i == 0"
+                *ngIf="
+                  day.appointments.length > 0 &&
+                  hourHasAppointment(i, day).length > 0
+                "
                 [data]="{
                   viewingNumber: 3
                 }"
