@@ -1,6 +1,15 @@
 <FlexboxLayout flexDirection="column" class="wrapper" backgroundColor="#f4f4f4">
-  <FlexboxLayout flexDirection="row" class="top-wrapper">
-    <Label flexGrow="1" class="date ml-2" [text]="'WeekDateString'"></Label>
+  <FlexboxLayout class="top-wrapper" height="60" minHeight="60">
+    <FlexboxLayout flexGrow="1" class="ml-2 mr-1" alignItems="center">
+      <FlexboxLayout class="calendar-icon"> </FlexboxLayout>
+      <Label
+        class="date mx-1"
+        [text]="dateString | date : 'EEEE, d MMMM y'"
+      ></Label>
+      <FlexboxLayout class="clock-icon"> </FlexboxLayout>
+      <Label class="date mx-1" [text]="hourString"></Label>
+    </FlexboxLayout>
+
     <FlexboxLayout>
       <GridLayout (tap)="onPrevWeek()" height="60" width="40">
         <StackLayout class="arrow-left"> </StackLayout>
@@ -11,7 +20,63 @@
       </GridLayout>
     </FlexboxLayout>
   </FlexboxLayout>
-  <GridLayout>
+  <ScrollView>
+    <ng-container
+      *ngFor="let appointment of currentAppointments; let i = index"
+    >
+      <StackLayout class="viewing-card m-2">
+        <FlexboxLayout justifyContent="space-between" class="mb-2">
+          <FlexboxLayout>
+            <Label text="Image"></Label>
+            <StackLayout class="ml-2">
+              <Label [text]="appointment.property.name"></Label>
+              <Label
+                class="text-grey"
+                [text]="
+                  appointment.property.address.street +
+                  appointment.property.address.houseNumber +
+                  ', ' +
+                  appointment.property.address.zipCode +
+                  ' ' +
+                  appointment.property.address.city +
+                  ', ' +
+                  appointment.property.address.country
+                "
+              ></Label>
+            </StackLayout>
+          </FlexboxLayout>
+          <FlexboxLayout>
+            <Label text="Image"></Label>
+            <StackLayout class="ml-2">
+              <Label text="Leroy Alvarado"></Label>
+              <Label class="text-grey" text="Agent"></Label>
+            </StackLayout>
+          </FlexboxLayout>
+        </FlexboxLayout>
 
-  </GridLayout>
+        <FlexboxLayout alignItems="center" class="viewing-card-appointment">
+          <FlexboxLayout>
+            <FlexboxLayout class="calendar-icon"> </FlexboxLayout>
+            <Label class="mx-1" [text]="dateString | date : 'd MMMM y'"></Label>
+            <FlexboxLayout class="clock-icon"> </FlexboxLayout>
+            <Label class="mx-1" [text]="hourString"></Label>
+          </FlexboxLayout>
+          <FlexboxLayout justifyContent="center" flexGrow="1">
+            <FlexboxLayout class="user-icon mr-1"> </FlexboxLayout>
+            <Label [text]="'4 | 6'"></Label>
+          </FlexboxLayout>
+          <FlexboxLayout class="menu-icon"> </FlexboxLayout>
+        </FlexboxLayout>
+
+        <FlexboxLayout
+          class="viewing-card-button mt-1 p-1"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <FlexboxLayout class="plus-icon mr-1"> </FlexboxLayout>
+          <Label text="Create Viewing" class="viewing-card-button-text"></Label>
+        </FlexboxLayout>
+      </StackLayout>
+    </ng-container>
+  </ScrollView>
 </FlexboxLayout>

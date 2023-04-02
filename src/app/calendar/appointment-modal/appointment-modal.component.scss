@@ -7,3 +7,50 @@
   font-weight: bold;
   font-size: 14;
 }
+.viewing-card {
+  background-color: white;
+  border-radius: 4;
+  border-color: #e7e7e7;
+  border-width: 1.6;
+  padding: 15;
+  &-appointment,
+  &-button {
+    border-width: 1.6;
+    border-color: #e7e7e7;
+    border-radius: 4;
+  }
+  &-appointment {
+    padding: 15;
+  }
+  &-button-text {
+    font-weight: 700;
+    font-size: 11;
+    color: #fa9c3b;
+  }
+}
+.calendar-icon,
+.clock-icon,
+.menu-icon,
+.user-icon,
+.plus-icon {
+  height: 16;
+  width: 16;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+.calendar-icon {
+  background-image: url("~/app/assets/calendar_active.png");
+}
+.clock-icon {
+  background-image: url("~/app/assets/clock_active.png");
+}
+.menu-icon {
+  background-image: url("~/app/assets/menu_icon.png");
+}
+.plus-icon {
+  background-image: url("~/app/assets/circle_plus_solid.png");
+}
+.user-icon {
+  background-image: url("~/app/assets/user_active.png");
+}

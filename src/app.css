@@ -91,6 +91,19 @@
   margin-bottom: 20;
 }
 
+.mx-1 {
+  margin-right: 10;
+  margin-left: 10;
+}
+.mx-2 {
+  margin-right: 20;
+  margin-left: 20;
+}
+.mx-3 {
+  margin-right: 30;
+  margin-left: 30;
+}
+
 .p-small {
   padding: 5;
 }

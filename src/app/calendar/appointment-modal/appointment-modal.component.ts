@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { ModalDialogParams } from "@nativescript/angular";
+import { Appointment } from "~/app/models/appointment.model";
 
 @Component({
   selector: "ns-appointment-modal",
@@ -7,8 +8,18 @@ import { ModalDialogParams } from "@nativescript/angular";
   styleUrls: ["./appointment-modal.component.scss"],
 })
 export class AppointmentModalComponent {
+  currentAppointments: Appointment[];
+  dateString: string = "";
+  hourString: string = "";
+
   constructor(private params: ModalDialogParams) {
-    console.log("###", params.context.data);
+    this.currentAppointments = params.context.data;
+    this.dateString = this.currentAppointments[0].date.toDateString();
+    this.hourString =
+      this.currentAppointments[0].date.getUTCHours().toString() +
+      ":00 - " +
+      (this.currentAppointments[0].date.getUTCHours() + 1).toString() +
+      ":00";
   }
 
   onPrevWeek(): void {
