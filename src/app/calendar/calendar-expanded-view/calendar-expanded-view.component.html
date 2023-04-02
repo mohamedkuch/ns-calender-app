@@ -70,9 +70,7 @@
                   day.appointments.length > 0 &&
                   hourHasAppointment(i, day).length > 0
                 "
-                [data]="{
-                  viewingNumber: 3
-                }"
+                [data]="hourHasAppointment(i, day)"
                 [isInPast]="day.isInPast"
               ></ns-viewing-card>
             </FlexboxLayout>

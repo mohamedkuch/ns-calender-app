@@ -7,11 +7,9 @@
   width="100%"
   [class.isInPast]="isInPast"
   [class.isInFuture]="!isInPast"
+  (tap)="onOpenModal()"
 >
-  <Label
-    class="viewing-card-text"
-    [text]="data.viewingNumber + ' VIEWINGS'"
-  ></Label>
+  <Label class="viewing-card-text" [text]="' VIEWINGS'"></Label>
   <FlexboxLayout class="viewing-card-image" width="30" height="30">
   </FlexboxLayout>
 </FlexboxLayout>

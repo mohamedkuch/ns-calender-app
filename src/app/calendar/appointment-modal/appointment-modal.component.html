@@ -1,0 +1,17 @@
+<FlexboxLayout flexDirection="column" class="wrapper" backgroundColor="#f4f4f4">
+  <FlexboxLayout flexDirection="row" class="top-wrapper">
+    <Label flexGrow="1" class="date ml-2" [text]="'WeekDateString'"></Label>
+    <FlexboxLayout>
+      <GridLayout (tap)="onPrevWeek()" height="60" width="40">
+        <StackLayout class="arrow-left"> </StackLayout>
+      </GridLayout>
+
+      <GridLayout (tap)="onNextWeek()" height="60" width="45">
+        <StackLayout class="arrow-right"> </StackLayout>
+      </GridLayout>
+    </FlexboxLayout>
+  </FlexboxLayout>
+  <GridLayout>
+
+  </GridLayout>
+</FlexboxLayout>

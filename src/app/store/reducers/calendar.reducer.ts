@@ -2,7 +2,7 @@ import { Action, createReducer, on } from "@ngrx/store";
 import { Appointment } from "../../models/appointment.model";
 import * as CalendarActions from "../actions/calendar.actions";
 // Load appointments from JSON file (Mock Data)
-const APPOINTMENTS_JSON = require("../../assets/data/data.json");
+const APPOINTMENTS_JSON = require("../../assets/data/data_2.json");
 
 export interface CalendarState {
   activeDate: Date;

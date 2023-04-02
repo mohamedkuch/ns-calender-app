@@ -10,6 +10,8 @@ import { CalendarExpandedViewComponent } from "./calendar/calendar-expanded-view
 import { ViewingCardComponent } from "./calendar/calendar-expanded-view/viewing-card/viewing-card.component";
 import { StoreModule } from "@ngrx/store";
 import { calendarReducer } from "./store/reducers/calendar.reducer";
+import { AppointmentModalComponent } from "./calendar/appointment-modal/appointment-modal.component";
+
 @NgModule({
   bootstrap: [AppComponent],
   imports: [
@@ -25,6 +27,7 @@ import { calendarReducer } from "./store/reducers/calendar.reducer";
     CalendarNextViewComponent,
     CalendarExpandedViewComponent,
     ViewingCardComponent,
+    AppointmentModalComponent,
   ],
   providers: [],
   schemas: [NO_ERRORS_SCHEMA],
