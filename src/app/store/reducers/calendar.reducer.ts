@@ -13,6 +13,7 @@ export interface CalendarState {
   activeMonthNumber: number;
   activeMonthDate: Date;
   appointments: Appointment[];
+  activeAppointments: Appointment[];
 }
 
 export const initialState: CalendarState = {
@@ -22,6 +23,7 @@ export const initialState: CalendarState = {
   activeMonthNumber: getActiveMonthNumber(new Date()),
   activeMonthDate: getFirstMonthDay(new Date()),
   appointments: getAppointments(APPOINTMENTS_JSON),
+  activeAppointments: [],
 };
 
 // Extra : if we want to request the data from a server we need to create effect file
@@ -55,6 +57,10 @@ export const calendarReducer = createReducer(
   on(CalendarActions.setAppointments, (state, { data }) => ({
     ...state,
     appointments: getAppointments(data),
+  })),
+  on(CalendarActions.setActiveAppointment, (state, { data }) => ({
+    ...state,
+    activeAppointments: data,
   }))
 );
 

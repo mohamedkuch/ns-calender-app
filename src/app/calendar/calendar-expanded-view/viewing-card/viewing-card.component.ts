@@ -15,7 +15,7 @@ import { Appointment } from "~/app/models/appointment.model";
   styleUrls: ["./viewing-card.component.scss"],
 })
 export class ViewingCardComponent implements OnInit, AfterViewInit {
-  @Input() data: Appointment;
+  @Input() data: Appointment[];
   @Input() isInPast: boolean;
 
   constructor(

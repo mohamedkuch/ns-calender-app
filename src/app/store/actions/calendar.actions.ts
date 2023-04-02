@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { Appointment } from "~/app/models/appointment.model";
 
 export const setActiveDate = createAction(
   "[Calendar] Set Active Date",
@@ -18,4 +19,9 @@ export const setActiveMonth = createAction(
 export const setAppointments = createAction(
   "[Calendar] Set Appointments",
   props<{ data: JSON }>()
+);
+
+export const setActiveAppointment = createAction(
+  "[Calendar] Set Active Appointment",
+  props<{ data: Appointment[] }>()
 );
