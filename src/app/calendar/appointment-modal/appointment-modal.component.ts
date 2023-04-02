@@ -12,6 +12,9 @@ import { CalendarState } from "~/app/store/reducers/calendar.reducer";
 })
 export class AppointmentModalComponent implements OnInit {
   currentAppointments: Appointment[];
+  appointments: Appointment[];
+  currentAppointmnentIndex: number;
+
   dateString: string = "";
   hourString: string = "";
 
@@ -24,7 +27,11 @@ export class AppointmentModalComponent implements OnInit {
   ngOnInit(): void {
     this.store.select("calendarState").subscribe((state: CalendarState) => {
       if (state.activeAppointments.length > 0) {
+        this.appointments = state.appointments;
         this.currentAppointments = state.activeAppointments;
+        this.currentAppointmnentIndex = state.appointments.indexOf(
+          state.activeAppointments[0]
+        );
         this.dateString = this.currentAppointments[0].date.toDateString();
         this.hourString =
           this.currentAppointments[0].date.getUTCHours().toString() +
@@ -35,17 +42,23 @@ export class AppointmentModalComponent implements OnInit {
     });
   }
 
-  onPrevWeek(): void {
-    // let prevWeekDate = new Date(
-    //   this.activeWeek[0].getTime() - 7 * 24 * 60 * 60 * 1000
-    // );
-    // this.store.dispatch(setActiveWeek({ date: prevWeekDate }));
+  onPrevAppointment(): void {
+    if (this.currentAppointmnentIndex > 0) {
+      this.store.dispatch(
+        setActiveAppointment({
+          data: [this.appointments[this.currentAppointmnentIndex - 1]],
+        })
+      );
+    }
   }
 
-  onNextWeek(): void {
-    // let nextWeekDate = new Date(
-    //   this.activeWeek[0].getTime() + 7 * 24 * 60 * 60 * 1000
-    // );
-    // this.store.dispatch(setActiveWeek({ date: nextWeekDate }));
+  onNextAppointment(): void {
+    if (this.currentAppointmnentIndex < this.appointments.length - 1) {
+      this.store.dispatch(
+        setActiveAppointment({
+          data: [this.appointments[this.currentAppointmnentIndex + 1]],
+        })
+      );
+    }
   }
 }

@@ -142,6 +142,13 @@ function getAppointments(data: JSON): Appointment[] {
     result.push(new Appointment(node));
   });
 
+  // sort the appointments by date in ascending order
+  result.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateA.getTime() - dateB.getTime();
+  });
+
   return result;
 }
 

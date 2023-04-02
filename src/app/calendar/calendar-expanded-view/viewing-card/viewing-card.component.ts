@@ -34,7 +34,7 @@ export class ViewingCardComponent implements OnInit, AfterViewInit {
         context: { data: this.data },
       })
       .then((result) => {
-        console.log("Modal closed with result:", result);
+        console.log("Modal closed");
       });
   }
 }
