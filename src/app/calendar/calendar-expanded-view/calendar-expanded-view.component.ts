@@ -45,10 +45,14 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
   activeDate: Date = new Date();
   activeWeek: Date[];
   WeekDateString: string = "";
+  currentTime: string;
 
   private onDestroy$: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<{ calendarState: CalendarState }>) {}
+  constructor(private store: Store<{ calendarState: CalendarState }>) {
+    // Update the current time every minute
+    this.currentTime = this.getCurrentTime();
+  }
 
   ngOnInit(): void {
     this.store
@@ -69,6 +73,28 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
         });
       });
     this.initHoursArray();
+
+    setInterval(() => {
+      this.currentTime = this.getCurrentTime();
+    }, 60000); // 60000 milliseconds = 1 minute
+  }
+
+  getCurrentTime(): string {
+    const date = new Date();
+    const hours = this.padZero(date.getHours());
+    const minutes = this.padZero(date.getMinutes());
+    return `${hours}:${minutes}`;
+  }
+  // adding extra zero example : 08:0 => 08:00
+  padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
+  }
+
+  showCurrentTime(): boolean {
+    return (
+      Number(this.currentTime.substring(0, 2)) >= 8 &&
+      Number(this.currentTime.substring(0, 2)) <= 20
+    );
   }
 
   setWeekDateString(activeWeek: Date[]): string {
@@ -183,6 +209,29 @@ export class CalendarExpandedViewComponent implements OnInit, OnDestroy {
       this.activeWeek[0].getTime() + 7 * 24 * 60 * 60 * 1000
     );
     this.store.dispatch(setActiveWeek({ date: nextWeekDate }));
+  }
+
+  getCurrentTimeRow(): number {
+    let currentHour = Number(this.currentTime.substring(0, 2));
+
+    if (currentHour >= 8 && currentHour <= 20) {
+      return currentHour - 8;
+    }
+
+    return 0;
+  }
+
+  // we have 60 minutes in the hour
+  // the element height is 60
+  // the time card has 20 height
+  // the remaining space is 40 that we have as total margin possibility
+  // the result should be from 0 => 0% to 40 => 100%
+  getCurrentTimeMargin(): number {
+    let currentMinutes = Number(this.currentTime.substring(3));
+
+    let coeff = 40 / 60; // 40 max margin space and 60 max mintues number
+
+    return coeff * currentMinutes;
   }
 
   ngOnDestroy(): void {

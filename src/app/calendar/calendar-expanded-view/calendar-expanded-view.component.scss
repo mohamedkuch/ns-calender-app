@@ -39,3 +39,23 @@
     }
   }
 }
+
+.current-time {
+  &-wrapper {
+    z-index: 2;
+  }
+  &-line {
+    height: 1;
+    background-color: #3a89ec;
+  }
+  &-text {
+    background-color: #3a89ec;
+    padding: 4;
+    margin-left: 2;
+    color: white;
+    font-size: 10;
+    font-weight: bold;
+    border-radius: 4;
+    height: 20;
+  }
+}

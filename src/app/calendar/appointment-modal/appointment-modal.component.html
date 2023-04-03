@@ -12,11 +12,25 @@
 
     <FlexboxLayout>
       <GridLayout (tap)="onPrevAppointment()" height="60" width="40">
-        <StackLayout class="arrow-left"> </StackLayout>
+        <StackLayout
+          [ngClass]="
+            this.currentAppointmnentIndex > 0
+              ? 'arrow-left'
+              : 'arrow-left-inactive'
+          "
+        >
+        </StackLayout>
       </GridLayout>
 
       <GridLayout (tap)="onNextAppointment()" height="60" width="45">
-        <StackLayout class="arrow-right"> </StackLayout>
+        <StackLayout
+          [ngClass]="
+            this.currentAppointmnentIndex < this.appointments.length - 1
+              ? 'arrow-right'
+              : 'arrow-right-inactive'
+          "
+        >
+        </StackLayout>
       </GridLayout>
     </FlexboxLayout>
   </FlexboxLayout>

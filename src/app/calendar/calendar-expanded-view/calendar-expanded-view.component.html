@@ -42,6 +42,20 @@
   <GridLayout rows="*" flexGrow="1">
     <ScrollView orientation="vertical">
       <GridLayout [rows]="generateGridRows()" [columns]="generateGridColumns()">
+        <AbsoluteLayout
+          *ngIf="showCurrentTime()"
+          colSpan="8"
+          [row]="getCurrentTimeRow()"
+          [marginTop]="getCurrentTimeMargin()"
+          class="current-time-wrapper"
+          width="100%"
+        >
+          <StackLayout orientation="horizontal" width="100%">
+            <Label class="current-time-text" [text]="currentTime"> </Label>
+            <FlexboxLayout width="100%" class="current-time-line">
+            </FlexboxLayout>
+          </StackLayout>
+        </AbsoluteLayout>
         <ng-container *ngFor="let hour of hours; let i = index">
           <FlexboxLayout
             flexDirection="column"
